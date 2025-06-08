@@ -1,5 +1,5 @@
 # OverTheWire: Bandit Walkthrough
-# My goal is to improve my Linux and CLI skills
+### My goal is to improve my Linux and CLI skills
 
 # --------------------------------------------------------------------------------------------- #
 
@@ -9,7 +9,7 @@
 *Commands:* 
 - `ssh <username@host>`: used to connect to a remote host.
     - `-port <port>`: designate a port
-- `man <command>`: open the manual page of a command. Very important
+- `man <command>`: open the manual page of a command. **This is very important.**
 
 *Givens:*
 - Username = bandit0
@@ -341,5 +341,84 @@ FO5dwFsc0cbaIiH0h8J2eUks2vdTDwAn
 
 # --------------------------------------------------------------------------------------------- #
 
+## Level 14
+
+*Goal:* The password for the next level is stored in /etc/bandit_pass/bandit14 and can only be read by user bandit14. For this level, you don’t get the next password, but you get a private SSH key that can be used to log into the next level. Note: localhost is a hostname that refers to the machine you are working on
+
+*Commands:*
+- `ssh <username@host>`: securely connect to a remote host (also in level 0)
+    - `-i <filename>`: specify a file for a private SSH key.
+    - `-port <port>`: designate a port
+
+
+*Steps:*
+1. `ls`. file name is sshkey.private
+2. `cat sshkey.private`. I was curious. Just a bunch of letters and numbers in seemingly random order.
+2. `man ssh`. used this to discover `-i`
+3. `ssh -i sshkey.private -p 2220 bandit14@locahost`. bandit14 is obvious from the goal. localhost was a guess based on the note
+
+*Answer:*
+```bash
+ssh -i sshkey.private bandit14@localhost -p 2220
+```
+
+# --------------------------------------------------------------------------------------------- #
+
+## Level 15
+
+*Goal:* The password for the next level can be retrieved by submitting the password of the current level to port 30000 on localhost.
+
+*Commands:*
+- `telnet <host> <port>`: The  telnet  command is used to communicate with another host using the TELNET protocol.
+
+*Steps:*
+1. `cat /etc/bandit_pass/bandit14`. This is from the goal of the previous level. MU4VWeTyJk8ROof1qqmcBPaLh7lDCPvS
+2. `man telnet`. I used this to learn the telnet syntax.
+3. `telnet localhost 30000`.
+4. Telnet connection opens. Input previous password
+
+*Answer:*
+8xCjnmgoKbGLhHFAZlGE5Tmu4M2tKJQo
+
+# --------------------------------------------------------------------------------------------- #
+
+## Level 16
+
+*Goal:* The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL/TLS encryption.
+
+*Commands:*
+- `openssl`: OpenSSL is a cryptography toolkit implementing the Secure Sockets Layer and Transport Layer Security network protocols
+    - `s_client`: Initiate a raw SSL/TLS client connection to a remote host and port. Like telnet, but for encrypted connections.
+    - `-connect`: connect
+
+*Steps:*
+1. `man ssl`. Says to see individual pages for detail.
+2. `man tls`. Command doesn't exist
+3. `man openssl`. 
+4. `openssl s_client -connect localhost:30001`
+5. Input previous password
+
+*Answer:*
+kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx
+
+# --------------------------------------------------------------------------------------------- #
+
+## Level 17
+
+*Goal:* The credentials for the next level can be retrieved by submitting the password of the current level to a port on localhost in the range 31000 to 32000. First find out which of these ports have a server listening on them. Then find out which of those speak SSL/TLS and which don’t. There is only 1 server that will give the next credentials, the others will simply send back to you whatever you send to it.
+
+*Commands:*
+- `nmap <port> <hostname>`: Network exploration tool and security / port scanner
+    - `-p <port ranges>`: port range
+- `ncat <hostname> <port>`: Concatenate and redirect sockets
+    - `--ssl`: Connect or listen with SSL
+
+*Steps:*
+1. `man nmap`
+2. `nmap -p31000-32000 localhost`. Output is 5 ports. 31046, 31518, 31691, 31790, 31960
+3. `man ncat`
+4. `ncat -ssl localhost <port>`. I tried the 5 open ports. Nothing happened, and I terminated using ctrl+c. From what I understand after some research, it is waiting for input.
+5. `echo "kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx" | ncat -ssl localhost <port>`. I thought that if the output was the same as the previous password, then according to the goal, it isn't the target port. Nothing happened, and I terminated using ctrl+c. It also needs some kind of input. Also, apparently ncat -ssl isn't very reliable in terms of ssl.
+6. `echo "kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx" | openssl s_client -connect localhost:<port>`. Lots of words as output. No password. However, only 31518 and 31790 have a certificate.
 
 
