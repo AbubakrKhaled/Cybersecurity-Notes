@@ -198,3 +198,148 @@ morbNTDkSW6jIlUc0ymOdMaLnOlFVAaj
 
 *Answer:*
 dfwvzFQi4mU0wfNbFOe9RoWskMLg7eEc
+
+# --------------------------------------------------------------------------------------------- #
+
+## Level 9
+*Goal:* The password for the next level is stored in the file data.txt and is the only line of text that occurs only once
+
+*Commands:*
+- `uniq`: detects duplicates (REQUIRES sorted input)
+    - `-u`: prints unique lines ONLY
+- `sort`: sorts alphabetically
+    - `-n`: sorts numerically ascending
+    - `-u`: remove duplicates; still prints one of every line.
+- `|`: takes output of command on the left and uses it as input for command on the right.
+
+*Steps:*
+1. `cat data.txt`. Printed many lines of letters
+2. `man sort` and `man uniq`. 
+3. `sort data.txt | uniq -u`. Success.
+
+*Answer:*
+4CKMh1JI91bUIZZPXDqGanal4xvAg0JM
+
+# --------------------------------------------------------------------------------------------- #
+
+## Level 10
+*Goal:* The password for the next level is stored in the file data.txt in one of the few human-readable strings, c
+
+*Commands:*
+- `grep`: search
+    - `-a`: forces grep to treat binary files as text. Because if you try to print a file that contains binary it will output `grep: data.txt: binary file matches`
+- `string <file>`: extracts all human-readable ASCII characters from a file
+
+
+*Steps:*
+1. `grep "=" data.txt`. Output is `grep: data.txt: binary file matches`
+2. `grep "=" data.txt -a`. Output is a lot of gibberish from binary, but the password is there.
+3. `strings data.txt | grep "="`. I can see the password much more clearly, but there is still gibberish. After analyzing the ouput and re-reading the goal, I realized it says "preceded by several ‘=’ characters.", and I did only 1.
+4. `strings data.txt | grep "=="`. Success.
+
+*Answer:*
+FGUW5ilLVJrxX9kMYMmlN4MgbpfMiqey
+
+# --------------------------------------------------------------------------------------------- #
+
+## Level 11
+*Goal:* The password for the next level is stored in the file data.txt, which contains base64 encoded data
+
+*Commands:*
+- `base64`: use base64
+    - `-d`: decode base64 encoding
+    - `-i`: ignore garbage 
+
+*Steps:*
+1. `man base64`
+2. `base64 -di data.txt`. Success. (I also tried without `-i` and it worked)
+
+*Answer:*
+dtR173fZKb0RRsDFSGsg2RWnpNVj3qRr
+
+# --------------------------------------------------------------------------------------------- #
+
+## Level 12
+*Goal:* The password for the next level is stored in the file data.txt, where all lowercase (a-z) and uppercase (A-Z) letters have been rotated by 13 positions
+
+*Commands:*
+- `tr`: transform characters. Doesn't take file as input, have to use `|` or `<`
+
+*Steps:*
+1. `tr 'a-m' 'n-z' < data.txt`. Output: Gur pnssworq vs 7x16JArUVv5LxVuJssSVqootnHGyw9D4
+2. `tr 'n-z' 'a-m' < data.txt`. Output: Ghe caffjbed if 7k16JAeUVi5LkVhJffSVdbbgaHGlj9D4
+3. `tr 'A-M' 'N-Z' < data.txt`. Output: Gur pnssworq vs 7x16JArUVv5LxVuJssSVqootnHGyw9D4
+4. `tr 'N-Z' 'A-M' < data.txt`. Output: Ghe caffjbed if 7k16JAeUVi5LkVhJffSVdbbgaHGlj9D4
+5. I realize I am doing only half. I facepalm
+6. `cat data.txt | tr 'a-m' 'n-z' | tr 'n-z' 'a-m' | tr 'A-M' 'N-Z' | tr 'N-Z' 'A-M'`. Correct idea, but still wrong. Lowercase is correct, but then the decoded is sent to be 'decoded' again but in uppercase, so it messes it up. 
+Output: Ghe caffjbed if 7k16JAeHIi5LkIhJffFIdbbgaHGlj9D4
+7. `tr 'A-Za-z' 'N-ZA-Mn-za-m' < data.txt`. Success. A-Z is transformed to N-Z and A-M. a-z is tranformed to n-z and a-m.
+8. `cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'` also works.
+
+*Answer:*
+7x16WNeHIi5YkIhWsfFIqoognUTyj9Q4 
+
+# --------------------------------------------------------------------------------------------- #
+
+## Level 13
+*Goal:* The password for the next level is stored in the file data.txt, which is a hexdump of a file that has been repeatedly compressed. 
+
+*Commands:*
+- `xxd`: creates or reverses hex dumps from or to binary
+    - `r`: reverse
+- `touch`: create file
+- `gzip` and `bzip2`: compress
+    - `-d` decompress
+    - `-S .bin` forces on files ending with .bin; usually it gives error. 
+- `mv`: move or rename
+- `tar`: create, manipulate, and extract archive files
+    - `-x`: extracts from archive
+    - `-f`: specify filename
+    - `t`: shows what can be extracted. useful in step 28.
+
+*Steps:*
+1. `gzip -d data.txt`. Error, can't decompress data.txt because it isn't .gz and isn't decompressible.
+2. `mv data.txt data.txt.gz | gzip -d data.txt`. Error. Data not in gzip format.
+3. Need to convert hex dump to binary first then decompress.
+4. `touch data.bin`. Create a binary file
+5. `xxd -r data.txt > data.bin`. Convert hex dump to binary and put it into data.bin. Can overwrite data.txt, but this is cleaner for me.
+6. `file data.txt.gz`. Output: data.txt.gz: ASCII text
+7. `file data.bin`. Output: data.bin: gzip compressed data.
+8. `gzip -d -S .txt data.txt`. Output: gzip: data.txt: not in gzip format
+9. `gzip -d -S .bin data.bin`. There was no output. data.bin becomes data, and has to be renamed to data.bin again.
+10. `mv data data.bin`.
+11. Have to do it several times because it has been repeatedly compressed.
+12. Error. Can no longer decomrpess using gzip. 
+13. `file data.bin`. Output: data.bin: bzip2 compressed data, block size = 900k. In step 7, it was gzip.
+14. `bzip2 -d data.bin`. Output: data.bin.out
+15. `mv data.bin.out data.bin`.
+16. `file data.bin`. gzip again
+17. `gzip -d -S .bin data.bin`.
+18. `file data`. Output: data: POSIX tar archive (GNU). We are done decompressing.
+19. `tar -xf data`. New file called 'data5.bin' appeared in directory.
+20. `file data5.bin`. Output: data: POSIX tar archive (GNU). So I do `tar -xf data` again, which results in a new file called 'data6.bin'.
+21. `file data6.bin`. Output: data6.bin: bzip2 compressed data, block size = 900k.
+22. `bzip2 -d data6.bin`. Became data6.bin.out
+23. `file data6.bin.out`. Output: data6.bin.out: POSIX tar archive (GNU)
+24. It created data8.bin.
+25. `file data8.bin`. gzip
+26. `gzip -d -S .bin data8.bin`. Step 9. Makes a new file called data.
+27. `file data`. Output: data: POSIX tar archive (GNU)
+28. `tar -xf data`. Made a new file named data5.bin; which has the same name as a previous file. To make sure, use -tf, which doesn't extract but shows the files that can be extracted.
+29. `file data5.bin`. Output: data5.bin: POSIX tar archive (GNU).
+30. `tar -xf data5.bin`. data6.bin
+31. `file data6.bin`. data6.bin: bzip2 compressed data, block size = 900k
+32. `bzip2 -d data6.bin`. 
+33. `file data6.bin.out`. Output: data6.bin.out: POSIX tar archive (GNU)
+34. `tar -xf data6.bin.out`. data8.bin
+35. `file data8.bin`. gzip
+36. `gzip -d -S .bin data8.bin`. produces data8
+37. `file data8`. Output: data8: ASCII text
+
+*Answer:*
+FO5dwFsc0cbaIiH0h8J2eUks2vdTDwAn
+
+# --------------------------------------------------------------------------------------------- #
+
+
+
