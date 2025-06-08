@@ -412,6 +412,12 @@ kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx
     - `-p <port ranges>`: port range
 - `ncat <hostname> <port>`: Concatenate and redirect sockets
     - `--ssl`: Connect or listen with SSL
+- `openssl`: go to previous level
+    - `-quiet`: suppresses most diagnostic output during SSL/TLS handshake.
+- `chmod`: change mode; change permissions
+    - `600`: only owner can read (4) + write (2). Group and others = 0. 600
+    - **Read, write, execute. 4, 2, 1. User, group, others.**
+    - `chmod u+rw, u-x, g-rwx, o-rwx` should also have the same function.
 
 *Steps:*
 1. `man nmap`
@@ -420,5 +426,77 @@ kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx
 4. `ncat -ssl localhost <port>`. I tried the 5 open ports. Nothing happened, and I terminated using ctrl+c. From what I understand after some research, it is waiting for input.
 5. `echo "kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx" | ncat -ssl localhost <port>`. I thought that if the output was the same as the previous password, then according to the goal, it isn't the target port. Nothing happened, and I terminated using ctrl+c. It also needs some kind of input. Also, apparently ncat -ssl isn't very reliable in terms of ssl.
 6. `echo "kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx" | openssl s_client -connect localhost:<port>`. Lots of words as output. No password. However, only 31518 and 31790 have a certificate.
+7. `echo "kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx" | openssl s_client -connect localhost:<port> -quiet`>. Tried previous 2 ports. 31790 returned 'correct!' and an RSA private key.
+8. `echo "[answer]" > rsakey.pem`.
+9. `ssh -i rsakey.pem bandit17@bandit.labs.overthewire.org -p 2220`. Tells me permissions are too open
+10. `chmod 600 rsakey.pem`. Now it works.
 
+*Answer:*
+-----BEGIN RSA PRIVATE KEY-----
+MIIEogIBAAKCAQEAvmOkuifmMg6HL2YPIOjon6iWfbp7c3jx34YkYWqUH57SUdyJ
+imZzeyGC0gtZPGujUSxiJSWI/oTqexh+cAMTSMlOJf7+BrJObArnxd9Y7YT2bRPQ
+Ja6Lzb558YW3FZl87ORiO+rW4LCDCNd2lUvLE/GL2GWyuKN0K5iCd5TbtJzEkQTu
+DSt2mcNn4rhAL+JFr56o4T6z8WWAW18BR6yGrMq7Q/kALHYW3OekePQAzL0VUYbW
+JGTi65CxbCnzc/w4+mqQyvmzpWtMAzJTzAzQxNbkR2MBGySxDLrjg0LWN6sK7wNX
+x0YVztz/zbIkPjfkU1jHS+9EbVNj+D1XFOJuaQIDAQABAoIBABagpxpM1aoLWfvD
+KHcj10nqcoBc4oE11aFYQwik7xfW+24pRNuDE6SFthOar69jp5RlLwD1NhPx3iBl
+J9nOM8OJ0VToum43UOS8YxF8WwhXriYGnc1sskbwpXOUDc9uX4+UESzH22P29ovd
+d8WErY0gPxun8pbJLmxkAtWNhpMvfe0050vk9TL5wqbu9AlbssgTcCXkMQnPw9nC
+YNN6DDP2lbcBrvgT9YCNL6C+ZKufD52yOQ9qOkwFTEQpjtF4uNtJom+asvlpmS8A
+vLY9r60wYSvmZhNqBUrj7lyCtXMIu1kkd4w7F77k+DjHoAXyxcUp1DGL51sOmama
++TOWWgECgYEA8JtPxP0GRJ+IQkX262jM3dEIkza8ky5moIwUqYdsx0NxHgRRhORT
+8c8hAuRBb2G82so8vUHk/fur85OEfc9TncnCY2crpoqsghifKLxrLgtT+qDpfZnx
+SatLdt8GfQ85yA7hnWWJ2MxF3NaeSDm75Lsm+tBbAiyc9P2jGRNtMSkCgYEAypHd
+HCctNi/FwjulhttFx/rHYKhLidZDFYeiE/v45bN4yFm8x7R/b0iE7KaszX+Exdvt
+SghaTdcG0Knyw1bpJVyusavPzpaJMjdJ6tcFhVAbAjm7enCIvGCSx+X3l5SiWg0A
+R57hJglezIiVjv3aGwHwvlZvtszK6zV6oXFAu0ECgYAbjo46T4hyP5tJi93V5HDi
+Ttiek7xRVxUl+iU7rWkGAXFpMLFteQEsRr7PJ/lemmEY5eTDAFMLy9FL2m9oQWCg
+R8VdwSk8r9FGLS+9aKcV5PI/WEKlwgXinB3OhYimtiG2Cg5JCqIZFHxD6MjEGOiu
+L8ktHMPvodBwNsSBULpG0QKBgBAplTfC1HOnWiMGOU3KPwYWt0O6CdTkmJOmL8Ni
+blh9elyZ9FsGxsgtRBXRsqXuz7wtsQAgLHxbdLq/ZJQ7YfzOKU4ZxEnabvXnvWkU
+YOdjHdSOoKvDQNWu6ucyLRAWFuISeXw9a/9p7ftpxm0TSgyvmfLF2MIAEwyzRqaM
+77pBAoGAMmjmIJdjp+Ez8duyn3ieo36yrttF5NSsJLAbxFpdlc1gvtGCWW+9Cq0b
+dxviW8+TFVEBl1O4f7HVm6EpTscdDxU+bCXWkfjuRb7Dy9GOtt9JPsX8MBTakzh3
+vBgsyi/sN3RqRBcGU40fOoZyfAMT8s1m/uYv52O6IgeuZ/ujbjY=
+-----END RSA PRIVATE KEY-----
 
+# --------------------------------------------------------------------------------------------- #
+
+## Level 18
+
+*Goal*: There are 2 files in the homedirectory: passwords.old and passwords.new. The password for the next level is in passwords.new and is the only line that has been changed between passwords.old and passwords.new
+
+*Commands:*
+- `diff`: Compare files line by line.
+
+*Steps:*
+1. `man diff`
+2. `diff passwords.old passwords.new`
+
+*Answer:*
+x2gLTTjFwMOhQ8oWNbMN362QKxfRqGlO
+
+# --------------------------------------------------------------------------------------------- #
+
+## Level 19
+
+*Goal:* The password for the next level is stored in a file readme in the homedirectory. Unfortunately, someone has modified .bashrc to log you out when you log in with SSH.
+
+*Steps:*
+1. `ssh bandit18@bandit.labs.overthewire.org -p 2220 'cat ~/readme'`. Password is previous answer
+
+*Answer:*
+cGWpMaKXVwDUNgPAVJbWYuGHVn9zl3j8
+
+# --------------------------------------------------------------------------------------------- #
+
+## Level 20
+
+*Goal:* To gain access to the next level, you should use the setuid binary in the homedirectory. Execute it without arguments to find out how to use it. The password for this level can be found in the usual place (/etc/bandit_pass), after you have used the setuid binary.
+
+*Steps:*
+1. `./bandit20-do cat /etc/bandit_pass/bandit20`. ./bandit20-do is similar sudo; programmed to do one thing with root privileges.
+2. `man ./bandit20-do` returns mostly binary gibbersh.
+
+*Answer:*
+0qXahG8ZjOVMN9Ghs7iOWsCfZyXOUbYO
