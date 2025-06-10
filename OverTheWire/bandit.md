@@ -210,7 +210,9 @@ dfwvzFQi4mU0wfNbFOe9RoWskMLg7eEc
 - `sort`: sorts alphabetically
     - `-n`: sorts numerically ascending
     - `-u`: remove duplicates; still prints one of every line.
-- `|`: takes output of command on the left and uses it as input for command on the right.
+- `|`: takes output of command on the left and uses it as input for command on the right. **VERY IMPORTANT**
+- `>`: redirects the output of a command to a file. If the file has text, it is overwritten. **VERY IMPORTANT**
+- `>>`:  redirects the output of a command to a file. If the file has text, it is **NOT** overwritten. **VERY IMPORTANT**
 
 *Steps:*
 1. `cat data.txt`. Printed many lines of letters
@@ -495,8 +497,168 @@ cGWpMaKXVwDUNgPAVJbWYuGHVn9zl3j8
 *Goal:* To gain access to the next level, you should use the setuid binary in the homedirectory. Execute it without arguments to find out how to use it. The password for this level can be found in the usual place (/etc/bandit_pass), after you have used the setuid binary.
 
 *Steps:*
-1. `./bandit20-do cat /etc/bandit_pass/bandit20`. ./bandit20-do is similar sudo; programmed to do one thing with root privileges.
+1. `./bandit20-do cat /etc/bandit_pass/bandit20`. ./bandit20-do is similar to sudo; programmed to do a specific action with root privileges.
 2. `man ./bandit20-do` returns mostly binary gibbersh.
 
 *Answer:*
 0qXahG8ZjOVMN9Ghs7iOWsCfZyXOUbYO
+
+# --------------------------------------------------------------------------------------------- #
+
+## Level 21
+
+*Goal:* There is a setuid binary in the homedirectory that does the following: it makes a connection to localhost on the port you specify as a commandline argument. It then reads a line of text from the connection and compares it to the password in the previous level (bandit20). If the password is correct, it will transmit the password for the next level (bandit21).
+
+*Commands:*
+- `nc`: Netcat is used for just about anything involving TCP, UDP, or Unix-domain sockets.
+    - `-l`: listen rather than intiate connection to remote host
+    - `-p`: port
+- `&`: send process to the background
+
+*Steps:*
+1. `echo 0qXahG8ZjOVMN9Ghs7iOWsCfZyXOUbYO | nc -l -p 1234 &`. The password is sent to nc. nc is listening for a connection
+2. `./suconnect 1234`. Makes the connection that nc listens to.
+
+*Answer:*
+EeoULMCra2q0dSkYj561DX7s1CpBuOBt
+
+# --------------------------------------------------------------------------------------------- #
+
+## Level 22
+
+*Goal:* A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
+
+*Commands:*
+- `cron`: daemon to execute scheduled commands
+- `crontab`: A crontab file contains instructions to the cron(8) daemon of the general form: 'run this command at this time on this date'. 
+
+*Steps:*
+1. `cd /etc/cron.d`
+2. `ls -a`. 
+3. `cat cronjob_bandit22`. Output: 
+```bash
+@reboot bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
+* * * * * bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
+```
+4. `cat /usr/bin/cronjob_bandit22.sh`. Output: 
+```bash
+#!/bin/bash
+chmod 644 /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+```
+So the .sh script allows my to read the file.
+5. `cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv`. Success
+
+*Answer:*
+tRae0UfB9v0UzbCdn9cY0gQnds9GF58Q
+
+# --------------------------------------------------------------------------------------------- #
+
+## Level 23
+
+*Goal:* A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
+
+*Steps:*
+1. `cd /etc/cron.d`
+2. `ls -a`. 
+3. `cat cronjob_bandit23`. Output: 
+```bash
+@reboot bandit23 /usr/bin/cronjob_bandit23.sh &> /dev/null
+* * * * * bandit23 /usr/bin/cronjob_bandit23.sh &> /dev/null
+```
+4. `cat /usr/bin/cronjob_bandit23.sh`. To see what the script does. Output:
+```bash
+#!/bin/bash
+
+myname=$(whoami)
+mytarget=$(echo I am user $myname | md5sum | cut -d ' ' -f 1)
+
+echo "Copying passwordfile /etc/bandit_pass/$myname to /tmp/$mytarget"
+
+cat /etc/bandit_pass/$myname > /tmp/$mytarget
+```
+5. Problem is I am bandit22 currently, so the password that appears after running the script is the password for bandit22. Run the code myself, and switch any [myname] variable with bandit23.
+6. I tried using `nano` to edit the bash script, but it says I don't have the permissions.
+7. `echo I am user bandit23 | md5sum | cut -d ' ' -f 1`. Output: 8ca319486bfbbc3663ea0fbe81326349
+8. `cat /tmp/8ca319486bfbbc3663ea0fbe81326349`. Success.
+
+*Answer:*
+0Zf11ioIjMVN551jX3CmStKLYqjk54Ga
+
+# --------------------------------------------------------------------------------------------- #
+
+## Level 24
+
+*Goal:* A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
+
+*Commands*:
+- `nano <filename>`: text editor
+- `touch <filename>`: create a file
+
+*Steps:*
+1. `mktemp -d`
+2. `cd /tmp/tmp.9O8cvA27Ht`
+3. `touch s1.sh`
+4. `nano s1.sh`. I then wrote this script:
+```bash
+#!/bin/bash
+target=$(echo I am user bandit24 | md5sum | cut -d ' ' -f 1)
+cat /etc/bandit_pass/bandit24 > /tmp/$target
+cat /tmp/$target
+```
+5. `bash s1.sh`. To run script. Success.
+
+*Answer:*
+gb8KRRCsshuZXI0tUuR6ypOFjiZbf3G8
+
+# --------------------------------------------------------------------------------------------- #
+
+## Level 25
+
+*Goal:* A daemon is listening on port 30002 and will give you the password for bandit25 if given the password for bandit24 and a secret numeric 4-digit pincode. There is no way to retrieve the pincode except by going through all of the 10000 combinations, called brute-forcing.
+You do not need to create new connections each time
+
+*Commands:*
+- `for` loop syntax:
+```bash
+for var in (<number range>)
+do
+    #process
+done
+```
+- `$`: represents a command I write into the cli.
+- `grep -v <pattern> <file>`: It shows all lines that do **NOT** match a given pattern.
+    - `-n`: prints line numbers: to find
+
+*Steps:*
+1. Test response first. 
+```bash
+$ echo "gb8KRRCsshuZXI0tUuR6ypOFjiZbf3G8 0000" | nc localhost 30002
+I am the pincode checker for user bandit25. Please enter the password for user bandit24 and the secret pincode on a single line, separated by a space.
+Wrong! Please enter the correct current password and pincode. Try again.
+```
+2. So, I have to write a script using a for loop that goes from 0000 to 9999. The response of the daemon will be different when given the correct pin. So, I have to write all responses into a file, and then use the `uniq -u` and `sort` (level 9).
+3. However, this would require only recording responses, and I will not know the pin. Therefore, I will use `grep` to detect any line with [Wrong!] and remove it. Then, print with line number. PIN = line number - 1. HOWEVER, when you first connect using nc, there is the server's intial prompt, so it is PIN = line number - 2.
+3. `mktemp -d` then `touch pinBruteForce.sh`
+4. `nano pinBruteForce.sh` 
+```bash
+#!/bin/bash
+for i in {0000..9999}
+do
+    echo "gb8KRRCsshuZXI0tUuR6ypOFjiZbf3G8 $i" >> possibilities.txt
+done
+cat possibilities.txt | nc localhost 30002 > result.txt
+grep -v -n "Wrong" result.txt
+```
+5. Output:
+```bash
+2221:Correct!
+2222:The password of user bandit25 is iCi86ttT4KSNe1armKiwbQNmB3YJP3q4
+```
+PIN number is therefore 2219. 
+
+*Answer:*
+iCi86ttT4KSNe1armKiwbQNmB3YJP3q4
+
+# --------------------------------------------------------------------------------------------- #
+
+## Level 26
