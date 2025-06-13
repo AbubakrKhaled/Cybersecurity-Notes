@@ -795,5 +795,123 @@ index 7ba2d2f..d4e3b74 100644
 *Answer:*
 4pT1t5DENaYuqnqvadYs1oE4QLCdjmJ7
 
+# ------------------------------------------------------------------------------ #
+
+## Level 30
+
+*Goal:* There is a git repository at ssh://bandit29-git@localhost/home/bandit29-git/repo via the port 2220. The password for the user bandit29-git is the same as for the user bandit29. Clone the repository and find the password for the next level.
+
+*Commands:*
+- `git checkout <branch>`: enter a branch. A branch is another version that 'splits' at some point from main/origin.
+    - `git branch -a`: list all branches
+
+*Steps:*
+1. `cd $(mktemp -d)`
+2. `git clone ssh://bandit29-git@localhost:2220/home/bandit29-git/repo`. Enter level 29 password
+3. `cd repo/`
+4. `cat README`. Output:
+```bash
+# Bandit Notes
+Some notes for bandit30 of bandit.
+
+## credentials
+
+- username: bandit30
+- password: <no passwords in production!>
+```
+5. `git log` doesn't contain the answer 
+6. `git branch -a`. Output:
+```bash
+ master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/dev
+  remotes/origin/master
+  remotes/origin/sploits-dev
+```
+7. `git checkout master` and `git checkout HEAD`. Output: Your branch is up to date with 'origin/master'. No difference from main.
+8. `git checkout sploits-dev`. The branch isn't up to date, but it also doesn't have the password. 
+9. `git checkout dev` then `cat README`
+
+*Answer:*
+qp30ex3VLz5MDG1n91YowTv4Q8l7CDZL
+
+# ------------------------------------------------------------------------------ #
+
+## Level 31
+
+*Goal:* There is a git repository at ssh://bandit30-git@localhost/home/bandit30-git/repo via the port 2220. The password for the user bandit30-git is the same as for the user bandit30. Clone the repository and find the password for the next level.
+
+*Steps:*
+1. `cd $(mktemp -d)`
+2. `git clone ssh://bandit30-git@localhost:2220/home/bandit30-git/repo`. Enter level 30 password
+3. `cd repo/`
+4. `cat README`. Output:
+```bash
+just an epmty file... muahaha
+```
+5. `git log` and `git branch -a` don't contain the answer.
+6. `git tag`. lists all tags. Output: `secret`
+7. `git show secret`
+
+*Answer:*
+fb5S2xb7bRyFmAvQYQGEqsbhVyJqhnDy
+
+# ------------------------------------------------------------------------------ #
+
+## Level 32
+
+*Goal:* There is a git repository at ssh://bandit31-git@localhost/home/bandit31-git/repo via the port 2220. The password for the user bandit31-git is the same as for the user bandit31. Clone the repository and find the password for the next level.
+
+*Steps:*
+1. `cd $(mktemp -d)`
+2. `git clone ssh://bandit31-git@localhost:2220/home/bandit31-git/repo`. Enter level 31 password
+3. `cd repo/`
+4. `cat README`. Output:
+```bash
+This time your task is to push a file to the remote repository.
+
+Details:
+    File name: key.txt
+    Content: 'May I come in?'
+    Branch: master
+```
+5. `echo "May I come in?" > key.txt`
+6. `git add key.txt -f`. -f to force
+7. `git commit -m "key.txt added"`.
+
+*Answer:*
+3O9RfhqyAlVBEZpVb6LYStshZoqoSx5K
+
+# ------------------------------------------------------------------------------ #
+
+## Level 33
+
+*Goal:* After all this git stuff, it’s time for another escape. Good luck!
+
+*Concepts:*
+- `Local variables:` You can only use them when you create them
+- `Shell variables:` Made by the shell for you to use
+- `Environment variables:` You and any tool you run can use them. Usually in uppercase.
+- `echo $0`: tells you what shell you are using
+
+*Steps:*
+1. WELCOME TO THE UPPERCASE SHELL. Any command I write it converted to uppercase and says permission denied.
+2. 
+```bash
+>> ls -la
+sh: 1: LS: Permission denied
+>> man
+sh: 1: MAN: Permission denied
+>> sh
+sh: 1: SH: Permission denied
+>> echo 'a'
+sh: 1: ECHO: Permission denied
+```
+3. `$0` escapes into normal shell.
+4. `whoami`. bandit33
+5. `cat /etc/bandit_pass/bandit33`
+
+*Answer:*
+tQdtbs5D5i2vJwkO8mEyYEyTL8izoeJ0
 
 
