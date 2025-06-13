@@ -1,7 +1,7 @@
 # OverTheWire: Bandit Walkthrough
 ### My goal is to improve my Linux and CLI skills
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 0
 *Goal:* connect to OTW's server using SSH
@@ -22,7 +22,7 @@
 ssh bandit0@bandit.labs.overthewire.org -p 2220
 ```
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 1
 *Goal:* Read file called 'readme' located in the home directory
@@ -45,7 +45,7 @@ ssh bandit0@bandit.labs.overthewire.org -p 2220
 *Answer:*
 ZjLjTmM6FvvyRnrb2rfNWOZOTa6ip5If
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 2
 *Goal:* Read file called '-' located in the home directory
@@ -66,7 +66,7 @@ ZjLjTmM6FvvyRnrb2rfNWOZOTa6ip5If
 *Answer:*
 263JGJPfgU6LtdEvgfWU1XP5yac29mFx
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 3
 *Goal:* Read file called 'spaces in this filename' in the home directory
@@ -83,7 +83,7 @@ ZjLjTmM6FvvyRnrb2rfNWOZOTa6ip5If
 *Answer:*
 MNk8KNH3Usiio41PRUEoDFPqfxLPlSmx
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 4
 *Goal:* Read hidden file in the 'inhere' directory
@@ -103,7 +103,7 @@ MNk8KNH3Usiio41PRUEoDFPqfxLPlSmx
 *Answer:*
 2WmrDFRmJIq3IPxneAaMGhap0pFhF3NJ
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 5
 *Goal:* Read the only human-readable file when given 10 files.
@@ -127,7 +127,7 @@ MNk8KNH3Usiio41PRUEoDFPqfxLPlSmx
 *Answer:*
 4oQYVPkxZOOEOO5pTW81FB8j8lxXGUQw
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 6
 *Goal:* Read a file under the `inhere/` directory with the following properties:
@@ -158,7 +158,7 @@ not executable
 *Answer:*
 HWasnPhtq9AVKe0dmk45nxy20cvUa6EG
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 7
 *Goal:* password is somewhere on the server and has the following properties:
@@ -183,7 +183,7 @@ owned by group bandit6
 *Answer:*
 morbNTDkSW6jIlUc0ymOdMaLnOlFVAaj
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 8
 *Goal:* The password for the next level is stored in the file data.txt next to the word millionth
@@ -199,7 +199,7 @@ morbNTDkSW6jIlUc0ymOdMaLnOlFVAaj
 *Answer:*
 dfwvzFQi4mU0wfNbFOe9RoWskMLg7eEc
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 9
 *Goal:* The password for the next level is stored in the file data.txt and is the only line of text that occurs only once
@@ -222,7 +222,7 @@ dfwvzFQi4mU0wfNbFOe9RoWskMLg7eEc
 *Answer:*
 4CKMh1JI91bUIZZPXDqGanal4xvAg0JM
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 10
 *Goal:* The password for the next level is stored in the file data.txt in one of the few human-readable strings, c
@@ -242,7 +242,7 @@ dfwvzFQi4mU0wfNbFOe9RoWskMLg7eEc
 *Answer:*
 FGUW5ilLVJrxX9kMYMmlN4MgbpfMiqey
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 11
 *Goal:* The password for the next level is stored in the file data.txt, which contains base64 encoded data
@@ -259,7 +259,7 @@ FGUW5ilLVJrxX9kMYMmlN4MgbpfMiqey
 *Answer:*
 dtR173fZKb0RRsDFSGsg2RWnpNVj3qRr
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 12
 *Goal:* The password for the next level is stored in the file data.txt, where all lowercase (a-z) and uppercase (A-Z) letters have been rotated by 13 positions
@@ -281,7 +281,7 @@ Output: Ghe caffjbed if 7k16JAeHIi5LkIhJffFIdbbgaHGlj9D4
 *Answer:*
 7x16WNeHIi5YkIhWsfFIqoognUTyj9Q4 
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 13
 *Goal:* The password for the next level is stored in the file data.txt, which is a hexdump of a file that has been repeatedly compressed. 
@@ -341,7 +341,7 @@ Output: Ghe caffjbed if 7k16JAeHIi5LkIhJffFIdbbgaHGlj9D4
 *Answer:*
 FO5dwFsc0cbaIiH0h8J2eUks2vdTDwAn
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 14
 
@@ -364,7 +364,7 @@ FO5dwFsc0cbaIiH0h8J2eUks2vdTDwAn
 ssh -i sshkey.private bandit14@localhost -p 2220
 ```
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 15
 
@@ -382,7 +382,7 @@ ssh -i sshkey.private bandit14@localhost -p 2220
 *Answer:*
 8xCjnmgoKbGLhHFAZlGE5Tmu4M2tKJQo
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 16
 
@@ -403,7 +403,7 @@ ssh -i sshkey.private bandit14@localhost -p 2220
 *Answer:*
 kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 17
 
@@ -462,7 +462,7 @@ dxviW8+TFVEBl1O4f7HVm6EpTscdDxU+bCXWkfjuRb7Dy9GOtt9JPsX8MBTakzh3
 vBgsyi/sN3RqRBcGU40fOoZyfAMT8s1m/uYv52O6IgeuZ/ujbjY=
 -----END RSA PRIVATE KEY-----
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 18
 
@@ -478,7 +478,7 @@ vBgsyi/sN3RqRBcGU40fOoZyfAMT8s1m/uYv52O6IgeuZ/ujbjY=
 *Answer:*
 x2gLTTjFwMOhQ8oWNbMN362QKxfRqGlO
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 19
 
@@ -490,7 +490,7 @@ x2gLTTjFwMOhQ8oWNbMN362QKxfRqGlO
 *Answer:*
 cGWpMaKXVwDUNgPAVJbWYuGHVn9zl3j8
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 20
 
@@ -503,7 +503,7 @@ cGWpMaKXVwDUNgPAVJbWYuGHVn9zl3j8
 *Answer:*
 0qXahG8ZjOVMN9Ghs7iOWsCfZyXOUbYO
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 21
 
@@ -522,7 +522,7 @@ cGWpMaKXVwDUNgPAVJbWYuGHVn9zl3j8
 *Answer:*
 EeoULMCra2q0dSkYj561DX7s1CpBuOBt
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 22
 
@@ -551,7 +551,7 @@ So the .sh script allows my to read the file.
 *Answer:*
 tRae0UfB9v0UzbCdn9cY0gQnds9GF58Q
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 23
 
@@ -584,7 +584,7 @@ cat /etc/bandit_pass/$myname > /tmp/$mytarget
 *Answer:*
 0Zf11ioIjMVN551jX3CmStKLYqjk54Ga
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 24
 
@@ -610,7 +610,7 @@ cat /tmp/$target
 *Answer:*
 gb8KRRCsshuZXI0tUuR6ypOFjiZbf3G8
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 25
 
@@ -659,6 +659,141 @@ PIN number is therefore 2219.
 *Answer:*
 iCi86ttT4KSNe1armKiwbQNmB3YJP3q4
 
-# --------------------------------------------------------------------------------------------- #
+# ------------------------------------------------------------------------------ #
 
 ## Level 26
+
+*Goal:* Logging in to bandit26 from bandit25 should be fairly easy… The shell for user bandit26 is not /bin/bash, but something else. Find out what it is, how it works and how to break out of it.
+
+*Concepts:*
+- `shell`: The 'window' a user uses to talk to the computer. The computer remembers which shell each user uses in a directory called `/etc/passwd`.
+
+*Commands:*
+- `more`: shows big files one page at a time. q = quit. space = go to next page. if file is smaller than a page, shows whole file.
+- `Vim`: a text editor. Can be entered using the more command then pressing `v`
+    - `:`: used to enter command-line mode in vim
+    - `i`: insert before cursor
+    - `:w`: save file (write)
+    - `:q`: quit
+
+
+*Steps:*
+1. `cat /etc/passwd | grep bandit26` Check bandit26's shell. Output:
+`bandit26:x:11026:11026:bandit level 26:/home/bandit26:/usr/bin/showtext`
+2. `cat /usr/bin/showtext`. See the script that opens the shell. Output:
+```bash
+#!/bin/sh
+
+export TERM=linux
+
+exec more ~/text.txt
+exit 0
+```
+3. `ls` in home directory shows a private ssh key. Tried `ssh -i bandit26.sshkey bandit26@localhost -p 2220`. Disconnects instantly. It is likely that the text in 'text.txt' is short, and more displays all of it on one page. 
+4. In vim, `:shell` uses the users default shell. The default shell for user bandit26 is /usr/bin/showtext, which doesn't work. Therefore, I use the command `:set shell=/bin/bash` to set the default shell to /bin/bash
+5. Resize windown so that it is very small vertically. `ssh -i bandit26.sshkey bandit26@localhost -p 2220`. Press `v` to enter vim.
+6. `:e /etc/bandit_pass/bandit26` for password
+7. `:set shell=/bin/bash` then `:shell`. I am now bandit26
+
+*Answer:*
+s0773xxkk0MXfdqOfPRVr9L3jJBUOgCZ
+
+# ------------------------------------------------------------------------------ #
+
+## Level 27
+
+*Goal:* Good job getting a shell! Now hurry and grab the password for bandit27!
+
+*Steps:*
+1. `ls`. bandit27-do
+2. `cat bandit27-do`. A bunch of unreadable characters
+3. `file bandit27-do`. Output: bandit27-do: setuid ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, BuildID[sha1]=35d353cf6d732f515a73f50ed205265fe1e68f90, for GNU/Linux 3.2.0, not stripped
+4. `./bandit27-do cat /etc/bandit_pass/bandit27`. Success. (Level 20)
+
+*Answer:*
+upsNCc7vzaRDx6oZC6GiR6ERwe1MowGB
+
+# ------------------------------------------------------------------------------ #
+
+## Level 28
+
+*Goal:* There is a git repository at ssh://bandit27-git@localhost/home/bandit27-git/repo via the port 2220. The password for the user bandit27-git is the same as for the user bandit27. Clone the repository and find the password for the next level.
+
+*Commands:*
+- `git`: 
+    - `clone`: copy a repository from a link.
+
+*Steps:*
+1. `ssh bandit27-git@localhost -p 2220`. Then prompted for password upsNCc7vzaRDx6oZC6GiR6ERwe1MowGB. However, it gives an error.
+2. `git clone ssh://bandit27-git@localhost:2220/home/bandit27-git/repo`. Permission denied.
+3. `cd $(mktemp -d)`. Then run above command again. Enter level 27 password. It works
+4. `ls -a`. `cd repo/`. `cat README`.
+
+*Answer:*
+Yz9IpL0sBcCeuG7m9uQFt8ZNpS4HZRcN
+
+# ------------------------------------------------------------------------------ #
+
+## Level 29
+
+*Goal:* There is a git repository at ssh://bandit28-git@localhost/home/bandit28-git/repo via the port 2220. The password for the user bandit28-git is the same as for the user bandit28. Clone the repository and find the password for the next level.
+
+*Steps:*
+1. `cd $(mktemp -d)`
+2. `git clone ssh://bandit28-git@localhost:2220/home/bandit28-git/repo`. Enter level 28 password
+3. `cd repo/`
+4. `cat README`. Output:
+```bash
+# Bandit Notes
+Some notes for level29 of bandit.
+
+## credentials
+
+- username: bandit29
+- password: xxxxxxxxxx
+```
+5. `git log`. View previous commits. Output:
+```bash
+commit 674690a00a0056ab96048f7317b9ec20c057c06b (HEAD -> master, origin/master, origin/HEAD)
+Author: Morla Porla <morla@overthewire.org>
+Date:   Thu Apr 10 14:23:19 2025 +0000
+
+    fix info leak
+
+commit fb0df1358b1ff146f581651a84bae622353a71c0
+Author: Morla Porla <morla@overthewire.org>
+Date:   Thu Apr 10 14:23:19 2025 +0000
+
+    add missing data
+
+commit a5fdc97aae2c6f0e6c1e722877a100f24bcaaa46
+Author: Ben Dover <noone@overthewire.org>
+Date:   Thu Apr 10 14:23:19 2025 +0000
+
+    initial commit of README.md
+```
+6. `git show fb0df1358b1ff146f581651a84bae622353a71c0`
+```bash
+commit fb0df1358b1ff146f581651a84bae622353a71c0
+Author: Morla Porla <morla@overthewire.org>
+Date:   Thu Apr 10 14:23:19 2025 +0000
+
+    add missing data
+
+diff --git a/README.md b/README.md
+index 7ba2d2f..d4e3b74 100644
+--- a/README.md
++++ b/README.md
+@@ -4,5 +4,5 @@ Some notes for level29 of bandit.
+ ## credentials
+
+ - username: bandit29
+-- password: <TBD>
++- password: 4pT1t5DENaYuqnqvadYs1oE4QLCdjmJ7
+```
+
+*Answer:*
+4pT1t5DENaYuqnqvadYs1oE4QLCdjmJ7
+
+
+
